@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { tablecrmApi } from '@/lib/tablecrm-api';
+import { toast } from 'sonner';
 
 const schema = z.object({
     token: z.string().min(10, 'Введите корректный токен'),
@@ -31,6 +32,7 @@ export default function TokenForm({
         setError(null);
         try {
             await tablecrmApi.getOrganizations(token);
+            toast.success('Токен добавлен');
             onSuccess(token);
         } catch {
             setError('Неверный токен');
@@ -39,7 +41,7 @@ export default function TokenForm({
         }
     }
     return (
-        <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="flex items-center justify-center p-4">
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full max-w-sm flex flex-col gap-4"

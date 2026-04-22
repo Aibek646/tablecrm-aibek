@@ -19,6 +19,15 @@ export default function OrderPage() {
         localStorage.removeItem('token');
         setToken(null);
     }
-    if (token === null) return <TokenForm onSuccess={handleToken} />;
-    return <OrderForm token={token} onLogout={handleLogout} />;
+
+    return (
+        <>
+            <TokenForm onSuccess={handleToken} />
+            <OrderForm
+                token={process.env.NEXT_PUBLIC_TOKEN!}
+                onLogout={handleLogout}
+            />
+            ;
+        </>
+    );
 }
